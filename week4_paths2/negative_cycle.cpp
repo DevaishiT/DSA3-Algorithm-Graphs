@@ -1,10 +1,30 @@
 #include <iostream>
 #include <vector>
+#include <climits>
 
 using std::vector;
 
 int negative_cycle(vector<vector<int> > &adj, vector<vector<int> > &cost) {
   //write your code here
+
+  vector<long> dist(adj.size(), INT_MAX);
+  dist[0] = 0;
+  for(int t=0; t<adj.size(); t++)
+  {
+    for(int i=0; i<adj.size(); i++)
+    {
+      for(int j=0; j<adj[i].size(); j++)
+      {
+        int v = adj[i][j];
+        if (dist[v] > dist[i] + cost[i][j]) 
+        {
+          dist[v] = dist[i] + cost[i][j];
+          if (t == adj.size() - 1) return 1;
+        }
+      }
+    }
+  }
+
   return 0;
 }
 
